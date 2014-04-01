@@ -1,0 +1,125 @@
+Changelog
+
+(Robin - 2013-03-13) - KBv0.71 new version
+- Comment updates
+
+(Robin - 2013-03-09) - KBv0.71
+- The Status Bar should is re-added in this version, though there seems to be a problem with the zoom?
+- ProfileLog, ProfileLogic, XmlReader and XmlWriter have been properly updated to be in line with changes that were previously made after v0.75, which should allow for import/export and save as
+- Note that the pressure and temperature array lists of ProfileLog are written to the xml file, but also the SensorMap and the TimeMap
+- DataGenerator (former inner class of ReplaySensor) has been moved to the Controller section where it belongs, but it is still observed directly by SensorPanel
+- Replay still functions normally
+- I can no longer verify that record works in this version (no Arduino unit), but no changes have been made that should cause a problem
+- Comments have been updated
+- This version can be used as a base for any last changes before sending in the code 
+
+
+(Robin - 2013-03-07) - Back to KBv0.7!
+- **WORKING VERISON!!** Records both pressure and temperature sensors, and plays them back!
+- Unfortunately this rolls back some of the nice GUI changes in 0.75 which will need to be re-added, I'll do what I can
+
+
+(Robin - 2013-03-01) - KBv0.63
+- (Classes changed since last version -> ColorUtil, SetSensorColor, SensorPanel, MainLogic, SensorPanelLogic, ProfileLogic, MenuFactory, ReplaySensor, GetSensor, NewProfileDialog, MainPanel)
+- Language definition files changed
+- Christer's changes to allows for distributed weight across all sensors were added in ColorUtil, SetSensorColor and SensorPanel (these methods will still need called).
+- Stefan's ScalingPanel was added, and now acts as a wrapper for the SensorPanel.  His code was also updated for NewProfileDialog in order to force a choice of sensor-mat (Prototype vs test) when creating a new profile
+- Note: Stefan's panel is integrated and functions, though it does not create the sensor panel when creating a profile, you still need to push play or record to make it visible.  
+- Minor changes were made to MainLogic, SensorPanelLogic, ProfileLogic, ReplaySensor, and GetSensor to get rid of the bug mentioned in 0.61 and 0.62.  You can now record a profile and then directly do a replay.
+- ReplaySensor's inner class GenerateData now contains getSliderMax() and getSliderTotal() to aid use of a slider bar showing replay progress.
+- Otherwise - the SensorPanel is aligned left in the ScalingPanel, which we probably want to change, and no picture capability is yet implemented in this version
+  
+
+(Robin - 2013-02-28) - KBv0.62 new version
+- (Classes changed since last version -> SensorData, GetSensor, ReplaySensor)
+- Changed the time stamp to include milliseconds for better replays
+- *Unless it is saved and then loaded, still unable to get a profile to play directly after recording, but at least it doesn't require a restart anymore.
+
+
+(Robin - 2013-02-28) - KBv0.62
+- (Classes changed since last version -> MenuFactory, ProfileLogic)
+- Added new class under View.Dialog called LoadDialog.  This allows loading a profile (and profile log) from file as long as it exists in the ProfileList.xml file.
+- MenuFactory now calls on LoadDialog for the "open dialog" option
+- ProfileLogic has had some logic fixed.
+- *Still working on fixes for 0.61 but wanted the working load uploaded for safety
+
+
+(Robin - 2013-02-28) - KBv0.61
+- (Classes changed since last version -> SensorData, SensorPanel, SensorPanelLogic, SensorMenu, ProfileLog, MainLogic, MainPanel)
+- New class ReplaySensor (with inner class DataGenerator) generates data for the SensorPanel when replaying data 
+- SensorData now holds the String name of the Sensor it is related to, this is used with the new time map in ProfileLog for data replay
+- SensorPanel is now called as either a recording panel or a play panel and is destroyed(removed) and reformed when switching between the two modes.  Right now this works with the current profile, though logic exists to expand it.
+- SensorPanelLogic now handles play and stop
+- From SensorMenu record/stop_record, play/pause, and stop should work as intended now.  Play will load a SensorPanel for playing data or Record will load a SensorPanel for recording data.  There is no need to use 'load sensors' in any form, though the main menu option should? still bring up a recording panel, and the load sensor button is currently non-functional. 
+- ProfileLog now holds a time map of all data over time for replay purposes
+- MainLogic loads the default ProfileLog if it exists
+- MainPanel was slightly altered to load sensors using the new boolean for play vs record, and to be able to remove the SensorPanel for remaking
+- *The load list dialogue is not in this version yet
+- Note: Since SensorData was changed, play requires data recorded with this new version to function
+
+
+(Robin - 2013-02-26) - KBv0.6 (new version)
+- Fixat färgskalan som använder den nya Arduino kod
+
+
+(Robin - 2013-02-25) - KBv0.6 (new version)
+(classes changed since last version -> Sensor, GetSensor, SensorPanel)
+- Added an InitialColorValue to Sensor for a value base-line (nollställning).  It is now used in SensorPanel instead of a general initial value for all sensors.
+- Fixed setValue in GetSensor to use equals instead of contains, just in case of bad indata like W123W2
+- getSensorValue in GetSensor is now getSensor and returns a sensor.  This is to allow retrieval of both the sensor value, and the initial colour value for comparison. It also takes a String as a parmater instead of an integer.  I got it to work with name instead of number now (equals, doh!) which allows the method to work for any sensor type.
+- I cleaned up the code in GetSensor and SensorPanel a bit
+- I still haven't address the load sensor button - just use the menu option till it's fixed
+
+
+(Robin - 2013-02-24) - KBv0.6 (new version)
+- Added Christer's colour scheme to the grid
+- I looked over the logic in ProfileLog and fixed a few things.  It doesn't write new sensors for every record/stop_record anymore.  It prints out the pressure sensors as normal, but then it oddly prints out the sensor map object that isn't even an xml element.  It isn't harmful, just an unnecessary extra object of sensors written to file.  I'll have to figure out why it's acting like that.
+- I haven't yet addressed the bug Stefan noticed when using the LoadSensor button instead of the menu option.
+
+
+(Robin - 2013-02-23) - KBv0.6
+- Added Stefan's SensorMenu and connected it to the logic so the record/stop_record button works BUT you must have done LoadSensors first
+- The play/stop button does not yet work, I need to finish writing the logic
+- Fixed "save" and "save on exit" so it finally also works for profiles who are NOT in the middle of recording data (it continues to work for recording profiles)
+- Added the SensorPanelLogic class for start/stop and record/stop_record logic.  I know we weren't going to move out the logic, but it actually became a severe problem that needed to be solved
+- I've temporarily made the inner class State in SensorMenu public.  I'll find a better way around this later.
+
+
+
+(Robin - 2013-02-22) - KBv0.53
+- Fixade XmlReader och XmlWriter så det verkligen fungerar att göra mapp (blev en mindre fel i koden som gjorde att före versionen inte fungerade som tänkt)
+- "save" och "save on exit" behöver mer berarbetning för profiler som inte håller på samla data
+- Annars fungerar det (jobbar på att fixa ovan)
+
+
+(Robin - 2013-02-21) - KBv0.52
+
+- comments have continued to be added
+- upgraded XmlReader and XmlWriter to use a directory (same name as profile id) when saving the Profile Log file, which can also be used for placing pictures related to the profile
+- Added code in MainLogic to allows other inactive profiles in other windows (to help Stefan implement his idea)
+- Attached "save" in the menu to code to actually save the profile without quitting (assumes data recording is
+active right now though, and uses stop-start capability, but isn't hurt if it isn't recording yet - should alter code so there is a difference though or it can cause future problems)
+- Fixed time map code for Message History and Log History. I didn't realise it was unfinished yesterday.
+- Added a reference of profile id to the Profile Log to easier see that they belong to each-other, useful if we use multi-windows later, and otherwise just useful.
+
+
+(Robin - 2013-02-20) - KBv0.51
+
+- comments throughout the code have been improved (removed old references and some old unused methods)
+- the Message class in model has been created to hold timestamped String messages, for use with newly implemented message/log history
+- a message history and log history can now found in ProfileLog in order for use with Stefan's status bar
+- a picture filename (with get and set methods) can now be found in Profile in order to hold a picture for use with that profile
+- Some fixes to start() stop() in SensorPanel for data readings
+- for models: (excepting Lang and GetSensor) added toString() where it was missing, as well as clone(),
+equals(), and hashCode()
+- Added serialVersionUIDs in the panel classes (to avoid the warning).  It is required because they extend JPanel and JPanel is serializable.
+
+
+Base Version - KBv0.5
+
+- MainLogic now starts the application
+- The SaveOnExit dialogue now saves if desired by the user
+- Basic stop logic is in place
+- save logic is ready (load logic was already ready)
+- the grid is dynamic in both logic and GUI with the get and set methods for iMaxColumns and iMaxRows within MainLogic, though there is no GUI dialogue that asks for columns/rows yet
+- various minor improvements

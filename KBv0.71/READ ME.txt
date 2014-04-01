@@ -1,0 +1,10 @@
+Set the correct build path or else the Arduino will not work.
+
+If Windows 32-bit: use the rxtx-2.1-7-bins-r2 directory
+If Windows 64-bit: use the ch-rxtx-2.2-20081207-win-x64 directory
+
+
+Robin's note:
+
+See my "changelog" file for more up to date version information.
+ 

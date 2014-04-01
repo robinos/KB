@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<profiles>
+    <profileList>
+        <id>default</id>
+    </profileList>
+    <profileList>
+        <id>test</id>
+    </profileList>
+</profiles>

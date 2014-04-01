@@ -1,0 +1,54 @@
+(c) 2013 Stefan Arvidsson 
+
+In this file I will describe the different keys, their properties and their start values.
+Please keep in mind to not alter the config.properties without considering what happens in the 
+IOConfig class and ConfigDialog class.
+
+***************************************************************************
+********* - Make Sure At Start - ******************************************
+***************************************************************************
+
+List of property keys that must have a value at start (since they do not have a default value):
+
+'Configured': At start set the value for the key 'Configured' to false, allows the user to set 
+	      configurations before the main frame starts.
+
+
+....
+
+
+Note: 'Language' can be left empty at start or if you want to set a default language it is 
+possible if you know the key from the langMap instance in the ConfigDialog class
+(See supportedLang()).
+
+***************************************************************************
+********* - Values Type And Default Value - ***************
+***************************************************************************
+'Configured': (Boolean) Has no default value, so make sure it is either true  or false (first 
+	       time the application runs).
+
+'Language': (String) Current default is English (US), this file does not exist in the Languages 
+	    package meaning it is the default language.
+	    This key's value should correspond to the langMap in the ConfigDialog class (See 
+	    supportedLang()). If empty gets the default language.
+
+'FullScreen': (Boolean) default is false, correspond to a check box in the ConfigDialog class.
+	      Used when initializing the Main class, if true switches to full screen.
+
+
+...
+
+
+***************************************************************************
+********* - Not Configurable During Runtime By ConfigDialog - *************
+***************************************************************************
+'FrameScaleAtStartX':(big number> int >0) sets the scale of the starting window
+
+'FrameScaleAtStartY':(big number> int >0)
+a note: alternative is to set a fixed size at first and store the window size
+	    when the frame is closing 
+
+...
+
+
+ 
